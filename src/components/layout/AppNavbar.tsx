@@ -1,4 +1,4 @@
-import { Box, Tooltip, Stack, Text, UnstyledButton } from '@mantine/core';
+import { Box, Tooltip, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { type ComponentType } from 'react';
 import { useAuthStore } from '../../stores/authStore';
@@ -84,6 +84,7 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
   const navigate = useNavigate();
   const location = useLocation();
   const user = useAuthStore((state) => state.user);
+  const theme = useMantineTheme();
   const isActive = (path: string) => location.pathname.startsWith(path);
 
   const navGroup = (items: NavItemDef[]) =>
@@ -102,7 +103,7 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
       <style>{`
         .ody-nav-item { color: rgba(255,255,255,0.65); transition: background 140ms, color 140ms; }
         .ody-nav-item:hover { background: rgba(255,255,255,0.09) !important; color: rgba(255,255,255,0.95) !important; }
-        .ody-nav-item[data-active] { background: rgba(52,152,219,0.22) !important; color: #85C1E2 !important; box-shadow: inset 3px 0 0 0 #5DADE2; }
+        .ody-nav-item[data-active] { background: rgba(52,152,219,0.22) !important; color: ${theme.colors.strategic[3]} !important; box-shadow: inset 3px 0 0 0 ${theme.colors.strategic[4]}; }
         .ody-nav-label { color: inherit; font-size: 14px; }
         .ody-nav-section { color: rgba(255,255,255,0.28); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 4px 14px 2px; }
         .ody-nav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 4px; }
@@ -112,7 +113,7 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
 
       <Box style={{
         height: '100%',
-        background: 'linear-gradient(175deg, #1e3a5f 0%, #13263F 100%)',
+        background: theme.gradients.navbar,
         display: 'flex',
         flexDirection: 'column',
         padding: '12px 8px',

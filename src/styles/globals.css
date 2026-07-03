@@ -10,33 +10,33 @@
 body {
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
-  color: var(--color-text-primary);
-  background-color: var(--color-background);
+  color: #2C3E50;
+  background-color: #F8F9FA;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Focus styles for accessibility */
+/* Focus styles for accessibility - using brand color from theme */
 *:focus {
-  outline: 2px solid var(--color-exeud);
+  outline: 2px solid #2D1B4E;
   outline-offset: 2px;
 }
 
-/* Link styles */
+/* Link styles - using brand colors from theme */
 a {
-  color: var(--color-exeud);
+  color: #2D1B4E;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-strategic);
+  color: #6C3BAA;
 }
 
-/* Selection styles */
+/* Selection styles - using brand colors from theme */
 ::selection {
-  background-color: var(--color-exeud);
-  color: var(--color-white);
+  background-color: #2D1B4E;
+  color: #FFFFFF;
 }
 
 /* Allow fixed canvas backgrounds to show through the app shell */
@@ -50,14 +50,14 @@ a:hover {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-background);
+  background: #F8F9FA;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-neutral);
+  background: #95A5A6;
   border-radius: var(--radius-md);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-secondary);
+  background: #7F8C8D;
 }
