@@ -76,13 +76,13 @@ pnpm build
 ## Deployment (GitHub Pages)
 
 - The frontend is deployed from this sub-project to GitHub Pages at:
-  - `https://caskilo.github.io/grant-manager`
+  - `https://caskilo.github.io/exeud-grants`
 - Vite is configured with a non-root base path in `vite.config.ts`:
-  - `base: '/grant-manager/'`
+  - `base: '/exeud-grants/'`
 - Environment configuration for production is done via `.env.production`:
 
   ```bash
-  VITE_API_URL=https://grant-manager-backend-f4064f970ae1.herokuapp.com/api (deprecated)
+  VITE_API_URL=https://exeud-grants-backend-f4064f970ae1.herokuapp.com/api (deprecated)
   ```
 
 ### GitHub Actions Workflow
@@ -97,15 +97,15 @@ pnpm build
 
 ## SPA Routing on GitHub Pages
 
-Because GitHub Pages is static, non-root routes (e.g. `/grant-manager/opportunities/123`) would normally 404. This repo uses a standard SPA fallback pattern:
+Because GitHub Pages is static, non-root routes (e.g. `/exeud-grants/opportunities/123`) would normally 404. This repo uses a standard SPA fallback pattern:
 
-- `public/404.html` stores the original path in `sessionStorage.redirect` and redirects to `/grant-manager/`.
+- `public/404.html` stores the original path in `sessionStorage.redirect` and redirects to `/exeud-grants/`.
 - `index.html` has a small script that, on load, checks `sessionStorage.redirect` and `history.replaceState` back to the intended route.
-- `BrowserRouter` is configured with `basename={import.meta.env.BASE_URL}` so that all internal routing respects the `/grant-manager/` subdirectory.
+- `BrowserRouter` is configured with `basename={import.meta.env.BASE_URL}` so that all internal routing respects the `/exeud-grants/` subdirectory.
 
 ## Authentication Flow
 
-1. User visits `https://caskilo.github.io/grant-manager/`.
+1. User visits `https://caskilo.github.io/exeud-grants/`.
 2. If `useAuthStore().user` is null, `App` renders the login routes only.
 3. On successful login:
    - Frontend calls `POST /api/auth/login` on the Heroku backend.
