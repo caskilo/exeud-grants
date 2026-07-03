@@ -37,6 +37,22 @@ export const theme = {
   primaryColor: 'exeud',
   primaryShade: { light: 6, dark: 5 } as const,
   defaultRadius: 'md',
+  other: {
+    gradients: {
+      header: 'linear-gradient(90deg, #4B2A80 0%, #2D1B4E 50%, #4B2A80 100%)',
+      navbar: 'linear-gradient(175deg, #4B2A80 0%, #2D1B4E 100%)',
+      title: 'linear-gradient(135deg, #ffffff 0%, #D2B8F7 100%)',
+      login: 'linear-gradient(135deg, #2D1B4E 0%, #4B2A80 25%, #5A2F8F 50%, #6C3BAA 75%, #8E5FC2 100%)',
+      loginButton: 'linear-gradient(135deg, #2D1B4E 0%, #6C3BAA 100%)',
+    },
+    shadows: {
+      sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      md: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+      lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+      card: '0 4px 12px rgba(0, 0, 0, 0.1)',
+      header: '0 2px 8px rgba(0, 0, 0, 0.15)',
+    },
+  },
 };
 
 export default theme;

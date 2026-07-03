@@ -1,4 +1,4 @@
-import { Group, Title, Button, Text, Box, Menu, Modal, Stack, PasswordInput } from '@mantine/core';
+import { Group, Title, Button, Text, Box, Menu, Modal, Stack, PasswordInput, useMantineTheme } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import api from '../../lib/api';
@@ -8,6 +8,7 @@ import { IconKey, IconLogout, IconChevronDown } from '@tabler/icons-react';
 
 /** Crow's Nest Logo - A stylized ship's lookout tower spotting the horizon */
 function CrowsNestLogo({ size = 40 }: { size?: number }) {
+  const theme = useMantineTheme();
   return (
     <svg
       width={size}
@@ -16,20 +17,20 @@ function CrowsNestLogo({ size = 40 }: { size?: number }) {
       style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}
     >
       {/* Crow's nest */}
-      <ellipse cx="20" cy="22" rx="10" ry="6" fill="none" stroke="#85C1E2" strokeWidth="2" />
+      <ellipse cx="20" cy="22" rx="10" ry="6" fill="none" stroke={theme.colors.exeud[2]} strokeWidth="2" />
       {/* Support ropes */}
-      <line x1="10" y1="22" x2="8" y2="32" stroke="#85C1E2" strokeWidth="2.5" opacity="0.7" />
-      <line x1="30" y1="22" x2="32" y2="32" stroke="#85C1E2" strokeWidth="2.5" opacity="0.7" />
+      <line x1="10" y1="22" x2="8" y2="32" stroke={theme.colors.exeud[2]} strokeWidth="2.5" opacity="0.7" />
+      <line x1="30" y1="22" x2="32" y2="32" stroke={theme.colors.exeud[2]} strokeWidth="2.5" opacity="0.7" />
       {/* Horizon/search arc */}
       <path
         d="M8 14 Q20 8 32 14"
         fill="none"
-        stroke="#2874A6"
+        stroke={theme.colors.exeud[4]}
         strokeWidth="2"
         strokeLinecap="round"
       />
       {/* The spotter/dot on horizon */}
-      <circle cx="20" cy="11" r="2" fill="#3498DB" />
+      <circle cx="20" cy="11" r="2" fill={theme.colors.exeud[3]} />
     </svg>
   );
 }
@@ -38,6 +39,7 @@ export default function AppHeader() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const theme = useMantineTheme();
 
   const [pwModalOpen, setPwModalOpen] = useState(false);
   const [currentPw, setCurrentPw] = useState('');
@@ -87,21 +89,21 @@ export default function AppHeader() {
     <>
       <style>{`
         .ody-header {
-          background: linear-gradient(90deg, #1e3a5f 0%, #13263F 50%, #1e3a5f 100%);
-          border-bottom: 1px solid rgba(93, 173, 226, 0.15);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          background: ${theme.other.gradients.header};
+          border-bottom: 1px solid rgba(179, 136, 235, 0.15);
+          box-shadow: ${theme.other.shadows.header};
         }
         .ody-header-title {
           font-family: 'Inter', system-ui, sans-serif;
           letter-spacing: -0.02em;
-          background: linear-gradient(135deg, #ffffff 0%, #85C1E2 100%);
+          background: ${theme.other.gradients.title};
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
         .ody-user-pill {
           background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(93, 173, 226, 0.2);
+          border: 1px solid rgba(179, 136, 235, 0.2);
           border-radius: 20px;
           padding: 4px 10px 4px 14px;
           cursor: pointer;

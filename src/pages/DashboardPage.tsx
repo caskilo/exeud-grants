@@ -1,6 +1,7 @@
 import {
   Container, Text, SimpleGrid, Paper, Stack, Group, Badge, ThemeIcon,
   RingProgress, Progress, Anchor, Center, Loader, Grid, Box, Tooltip,
+  useMantineTheme,
 } from '@mantine/core';
 import {
   IconBuildingBank, IconSparkles,
@@ -364,7 +365,8 @@ export default function DashboardPage() {
     );
   }
 
-  const CHART_COLORS = ['#228be6', '#40c057', '#fab005', '#fa5252', '#7950f2', '#15aabf', '#e64980'];
+  const theme = useMantineTheme();
+  const CHART_COLORS = [theme.colors.exeud[5], theme.colors.exeud[4], theme.colors.exeud[3], theme.colors.exeud[2], theme.colors.exeud[7], theme.colors.exeud[6], theme.colors.exeud[8]];
 
   return (
     <>
