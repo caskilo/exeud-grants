@@ -574,7 +574,7 @@ export default function SmartDiscoveryPanel({
       <Alert variant="light" color="blue" icon={<IconInfoCircle size={16} />}>
         <Text size="sm">
           <strong>How it works:</strong> The Smart Discovery uses an AI agent to browse the funder's website like a human researcher would. 
-          It identifies grant opportunities, extracts structured data (deadlines, amounts, eligibility), and scores them for relevance to the Odyssean Institute.
+          It identifies grant opportunities, extracts structured data (deadlines, amounts, eligibility), and scores them for relevance to Exeud.
           Opportunities appear directly in the Opportunities tab after extraction.
         </Text>
       </Alert>

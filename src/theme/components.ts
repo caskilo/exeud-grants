@@ -64,7 +64,7 @@ export const componentStyles = {
         margin: '2px 4px',
         transition: 'all 0.2s ease',
         '&[data-active]': {
-          backgroundColor: theme.colors.odyssean[0],
+          backgroundColor: theme.colors.exeud[0],
           color: theme.white,
         },
       },

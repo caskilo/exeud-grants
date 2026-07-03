@@ -521,7 +521,7 @@ export default function OpportunitiesPage() {
                         {isHarvest && <Badge size="xs" color="violet">Harvest</Badge>}
                         {isDiscovery && <Badge size="xs" color="blue">Discovery</Badge>}
                         {hasAlignment && alignmentScore !== null && (
-                          <Tooltip label={`Odyssean Alignment: ${alignmentScore}%`}><Badge size="xs" color={getAlignmentColor(alignmentScore)} variant="filled" leftSection={<IconTarget size={10} />}>{alignmentScore}% Match</Badge></Tooltip>
+                          <Tooltip label={`Exeud Alignment: ${alignmentScore}%`}><Badge size="xs" color={getAlignmentColor(alignmentScore)} variant="filled" leftSection={<IconTarget size={10} />}>{alignmentScore}% Match</Badge></Tooltip>
                         )}
                         {recommendation && <Badge size="xs" color={getRecommendationColor(recommendation)} variant="light">{formatRecommendation(recommendation)}</Badge>}
                         {matchedStrands.length > 0 && (
@@ -660,7 +660,7 @@ export default function OpportunitiesPage() {
                                   {isHarvest && <Badge size="xs" color="violet">Harvest</Badge>}
                                   {isDiscovery && <Badge size="xs" color="blue">Discovery</Badge>}
                                   {hasAlignment && alignmentScore !== null && (
-                                    <Tooltip label={`Odyssean Alignment: ${alignmentScore}%`}><Badge size="xs" color={getAlignmentColor(alignmentScore)} variant="filled" leftSection={<IconTarget size={10} />}>{alignmentScore}% Match</Badge></Tooltip>
+                                    <Tooltip label={`Exeud Alignment: ${alignmentScore}%`}><Badge size="xs" color={getAlignmentColor(alignmentScore)} variant="filled" leftSection={<IconTarget size={10} />}>{alignmentScore}% Match</Badge></Tooltip>
                                   )}
                                   {recommendation && <Badge size="xs" color={getRecommendationColor(recommendation)} variant="light">{formatRecommendation(recommendation)}</Badge>}
                                   {matchedStrands.length > 0 && (

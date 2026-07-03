@@ -1,6 +1,6 @@
-# Odyssean Grant Manager – Frontend
+# Exeud Grant Manager – Frontend
 
-React + TypeScript single-page app for the Odyssean grant management tool. Provides UI for authentication, dashboards, funders, opportunities, applications, templates, contacts, interactions, imports, and admin.
+React + TypeScript single-page app for the Exeud grant management tool. Provides UI for authentication, dashboards, funders, opportunities, applications, templates, contacts, interactions, imports, and admin.
 
 ## Stack
 
@@ -82,7 +82,7 @@ pnpm build
 - Environment configuration for production is done via `.env.production`:
 
   ```bash
-  VITE_API_URL=https://grant-manager-backend-f4064f970ae1.herokuapp.com/api
+  VITE_API_URL=https://grant-manager-backend-f4064f970ae1.herokuapp.com/api (deprecated)
   ```
 
 ### GitHub Actions Workflow

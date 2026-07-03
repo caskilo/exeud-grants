@@ -1,5 +1,5 @@
 // ============================================================================
-// User Guide Content — Odyssean Grant Manager
+// User Guide Content — Exeud Grant Manager
 // ============================================================================
 // All guide text lives in this single file for easy maintenance.
 // Components in the guide/ folder render this data; they never contain prose.
@@ -152,7 +152,7 @@ const opportunities: GuideModule = {
   title: 'Opportunities',
   icon: 'IconSparkles',
   summary:
-    'Grant opportunities discovered from funder websites, scored for alignment with Odyssean Institute research.',
+    'Grant opportunities discovered from funder websites, scored for alignment with Exeud research.',
   relatedRoutes: ['/opportunities'],
   sections: [
     {
@@ -355,7 +355,7 @@ const organisation: GuideModule = {
       content:
         'An orange "Unsaved changes" badge appears whenever you have modified settings. Click **Save changes** at the top right to persist all changes to the database. The backend reads the latest saved values on every request — there is no cache to clear.',
       tips: [
-        'Use "Reset to defaults" to restore all settings to the built-in Odyssean Institute defaults. This cannot be undone.',
+        'Use "Reset to defaults" to restore all settings to the built-in Exeud defaults. This cannot be undone.',
       ],
     },
   ],
@@ -611,7 +611,7 @@ const wfOpportunityReview: GuideModule = {
     {
       heading: 'Interpreting AI Scores',
       content:
-        '• **Fit Score (0–10)** — overall suitability for Odyssean Institute. Scores ≥7 are strong matches.\n' +
+        '• **Fit Score (0–10)** — overall suitability for Exeud. Scores ≥7 are strong matches.\n' +
         '• **Alignment Percentage** — derived from the 5 dimensional scores, shown as a tag on the list and a ring on the detail page.\n' +
         '• **Recommendation** — PURSUE (apply), MONITOR (watch), or NO_GO (skip).\n' +
         '• **Confidence** — how confident the AI is in its extraction (shown in the Details tab metadata).',
@@ -644,7 +644,7 @@ const wfPipeline: GuideModule = {
     {
       heading: 'Pipeline Stages',
       content:
-        'The Odyssean Grant Manager follows a structured pipeline:\n\n' +
+        'The Exeud Grant Manager follows a structured pipeline:\n\n' +
         '**Stage 0: Organisation** → Configure identity, programmes, and LLM context blocks. These drive relevance and scoring quality throughout every later stage.\n\n' +
         '**Stage 1: Catalogue** → Research and collect funder information in the Catalogue Editor. Use Auto-Fill to quickly extract data from funder websites.\n\n' +
         '**Stage 2: Funders** → Integrate catalogue entries to create Funder records. Each funder becomes a trackable entity with its own sources, opportunities, and contacts.\n\n' +

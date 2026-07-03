@@ -2,10 +2,10 @@ import { MantineColorsTuple } from '@mantine/core';
 
 export const theme = {
   colors: {
-    // Odyssean Institute Brand Colors (Extracted from Logo Assets)
+    // PLACEHOLDER — Exeud Brand Colors (not confirmed against real brand assets).
     // NOTE: Mantine expects tuples ordered LIGHT (index 0) -> DARK (index 9).
     // Filled variants default to shade 6, so we place the primary hue there.
-    odyssean: ['#EBF5FB', '#D6EAF8', '#AED6F1', '#85C1E2', '#5DADE2', '#3498DB', '#2874A6', '#1E5A8B', '#1e3a5f', '#13263F'] as MantineColorsTuple,
+    exeud: ['#F3ECFB', '#E5D6F7', '#D2B8F7', '#B388EB', '#8E5FC2', '#6C3BAA', '#5A2F8F', '#4B2A80', '#3A1F63', '#2D1B4E'] as MantineColorsTuple,
     grain: ['#F1FBF9', '#E8F8F5', '#D5F4E6', '#ABEBC6', '#87A96B', '#7D8A2E', '#27AE60', '#1E8449', '#166036', '#0c3a29'] as MantineColorsTuple,
     authority: ['#EAEDED', '#D5D8DC', '#AEB6BF', '#85929E', '#5D6D7E', '#34495E', '#2C3E50', '#1E5A8B', '#1e3a5f', '#13263F'] as MantineColorsTuple,
     flourishing: ['#D5F4E6', '#A9DFBF', '#76D7C4', '#52BE80', '#27AE60', '#229954', '#1E8449', '#176F3A', '#0c3a29', '#082B1F'] as MantineColorsTuple,
@@ -34,7 +34,7 @@ export const theme = {
   },
   fontFamily: 'Inter, system-ui, sans-serif',
   fontFamilyMonospace: 'JetBrains Mono, monospace',
-  primaryColor: 'odyssean',
+  primaryColor: 'exeud',
   primaryShade: { light: 6, dark: 5 } as const,
   defaultRadius: 'md',
 };

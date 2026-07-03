@@ -189,7 +189,7 @@ function getDeadlineDescription(deadlines: DeadlineEntry[] | string[] | null): s
   return null;
 }
 
-// Weights MUST mirror backend ALIGNMENT_WEIGHTS in odyssean-criteria.ts
+// Weights MUST mirror backend ALIGNMENT_WEIGHTS in organisation-defaults.ts
 // (sum = 1.0). If you change one, change the other.
 const DIM_WEIGHTS: Record<string, number> = {
   'Research Strand Match': 0.35,
@@ -496,7 +496,7 @@ export default function OpportunityDetailPage() {
 
               {hasOverall && (
                 <Paper p="md" withBorder style={{ textAlign: 'center', minWidth: 120 }}>
-                  <Text size="xs" c="dimmed" mb={4}>OI Alignment</Text>
+                  <Text size="xs" c="dimmed" mb={4}>Exeud Alignment</Text>
                   <Badge
                     size="xl"
                     color={getAlignmentColor(overallAlignment!)}
@@ -729,7 +729,7 @@ export default function OpportunityDetailPage() {
               </Tabs.Tab>
             )}
             <Tabs.Tab value="alignment" leftSection={<IconTarget size={16} />}>
-              OI Alignment
+              Exeud Alignment
             </Tabs.Tab>
             <Tabs.Tab value="eligibility" leftSection={<IconShieldCheck size={16} />}>
               Eligibility
@@ -848,7 +848,7 @@ export default function OpportunityDetailPage() {
                 <Group justify="space-between" align="flex-start" mb="md">
                   <Stack gap="xs" style={{ flex: 1 }}>
                     <Group gap="xs">
-                      <Text size="sm" fw={500}>Odyssean Institute Alignment</Text>
+                      <Text size="sm" fw={500}>Exeud Alignment</Text>
                       <ActionIcon
                         variant="subtle"
                         size="sm"
@@ -858,7 +858,7 @@ export default function OpportunityDetailPage() {
                       </ActionIcon>
                     </Group>
                     <Text size="xs" c="dimmed">
-                      Automated analysis of how well this opportunity aligns with OI research strands and methodology.
+                      Automated analysis of how well this opportunity aligns with Exeud's programmes and methodology.
                     </Text>
                   </Stack>
                     <Group gap="md" align="flex-start">
@@ -905,12 +905,12 @@ export default function OpportunityDetailPage() {
                     <Stack gap="sm">
                       <Text size="xs" fw={600}>How the Alignment Score is Calculated</Text>
                       <Text size="xs" c="dimmed">
-                        The AI analyzes the opportunity against Odyssean Institute's research priorities and methodology:
+                        The AI analyzes the opportunity against Exeud's programme priorities and methodology:
                       </Text>
                       <List size="xs" spacing="xs">
                         <List.Item>
-                          <Text span fw={500}>Research Strand Match (35%):</Text> Alignment with OI's three main strands - 
-                          Odyssean Process, GRAIN, and Aeonic Flourishing
+                          <Text span fw={500}>Research Strand Match (35%):</Text> Alignment with Exeud's three programmes - 
+                          ExeuδVR Toolkit, Decentralised Hosting, and Spatial Web R&D
                         </List.Item>
                         <List.Item>
                           <Text span fw={500}>Methodological Fit (20%):</Text> Preference for interdisciplinary, long-term, 
@@ -922,7 +922,7 @@ export default function OpportunityDetailPage() {
                         </List.Item>
                         <List.Item>
                           <Text span fw={500}>Impact Potential (15%):</Text> Potential for transformative outcomes and 
-                          contribution to OI's mission
+                          contribution to Exeud's mission
                         </List.Item>
                         <List.Item>
                           <Text span fw={500}>Practical Feasibility (10%):</Text> Geographic fit, funding amount, 
@@ -1014,7 +1014,7 @@ export default function OpportunityDetailPage() {
           <Tabs.Panel value="eligibility" pt="md">
             <Stack gap="md">
 
-              {/* OI Eligibility Check result */}
+              {/* Exeud Eligibility Check result */}
               {eligibilityResult && (
                 <Alert
                   icon={eligibilityResult.isEligible ? <IconCheck size={16} /> : <IconAlertCircle size={16} />}
@@ -1024,7 +1024,7 @@ export default function OpportunityDetailPage() {
                   onClose={() => setEligibilityResult(null)}
                 >
                   <Text size="sm" fw={600} mb={4}>
-                    {eligibilityResult.isEligible ? 'OI appears eligible for this opportunity' : 'OI may not be eligible'}
+                    {eligibilityResult.isEligible ? 'Exeud appears eligible for this opportunity' : 'Exeud may not be eligible'}
                   </Text>
                   <Stack gap={4}>
                     {eligibilityResult.reasons.map((r, i) => (
@@ -1048,13 +1048,13 @@ export default function OpportunityDetailPage() {
                 </Alert>
               )}
 
-              {/* OI Alignment summary - quick glance without switching tab */}
+              {/* Exeud Alignment summary - quick glance without switching tab */}
               {hasOverall && (
                 <Paper p="md" withBorder>
                   <Group justify="space-between" align="center">
                     <Stack gap={2}>
-                      <Text size="sm" fw={500}>OI Alignment Score</Text>
-                      <Text size="xs" c="dimmed">How well this grant fits OI's research priorities</Text>
+                      <Text size="sm" fw={500}>Exeud Alignment Score</Text>
+                      <Text size="xs" c="dimmed">How well this grant fits Exeud's priorities</Text>
                     </Stack>
                     <Group gap="sm">
                       {recommendation && (
@@ -1124,9 +1124,9 @@ export default function OpportunityDetailPage() {
                 <Stack gap="sm">
                   <Group justify="space-between" align="center">
                     <Stack gap={2}>
-                      <Text size="sm" fw={500}>Check OI Eligibility</Text>
+                      <Text size="sm" fw={500}>Check Exeud Eligibility</Text>
                       <Text size="xs" c="dimmed">
-                        Runs a rule-based check against OI's geography, applicant type, and award-size criteria.
+                        Runs a rule-based check against Exeud's geography, applicant type, and award-size criteria.
                       </Text>
                     </Stack>
                     <Button

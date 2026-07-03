@@ -103,127 +103,123 @@ const LLM_PROVIDER_OPTIONS = [
 
 // ─── Default context strings (mirror current backend hardcoded values) ─────────
 
-const DISCOVERY_CONTEXT_DEFAULT = `# Odyssean Institute Research Agenda
+const DISCOVERY_CONTEXT_DEFAULT = `# Exeuδ Immersive Technology Agenda
 
-The Odyssean Institute is an anchor institution for ambitious, robust methods to address Grand Challenges. It operates as a Focused Research Organization (FRO) targeting real-world impact through:
+Exeuδ ("out of eudaimonia") is an immersive technology company building open-source, self-hosted tools for the spatial web. It develops WebXR/VR experiences and toolkits designed for data autonomy and full code ownership, deployed on the Internet Computer (a decentralised, blockchain-based hosting network).
 
-## Three Research Strands
+## Three Work Strands
 
-### 1. Odyssean Process
-Decision-making under extreme risk and uncertainty. Integrates expert elicitation, DMDU modeling, and citizen assemblies for comprehensive, legitimate governance.
+### 1. ExeuδVR Toolkit
+An open-source (MPL 2.0), no-code/modular WebXR toolkit built on the Unity engine, enabling developers and clients to design and deploy VR experiences that run in-browser on VR, desktop, and mobile devices.
 
-**Focus areas:** Democratic innovation, participatory governance, AI governance, climate policy, systemic reform, public trust, institutional capacity
-**Methods:** Expert elicitation, DMDU, exploratory modeling, citizen assemblies, deliberative polling, futures methodologies
+**Focus areas:** WebXR, immersive/spatial computing, open-source developer tooling, no-code/modular software design, cross-platform 3D rendering
+**Methods:** Unity engine development, WebXR standards implementation, open-source library maintenance, modular/reusable code architecture
 
-### 2. GRAIN (Global Resilient Anticipatory Infrastructure Network)
-Building resilience against global collapse/extinction through critical infrastructure, supply chains, and institutional capacity.
+### 2. Decentralised Hosting & Data Autonomy
+Self-hosting virtual spaces and applications on the Internet Computer blockchain, giving clients full code ownership, controller delegation, and data privacy.
 
-**Focus areas:** Supply chain resilience, critical commodities, futures/foresight, sustainable development, agroecology, circular economy, trade policy
-**Methods:** Causal layered analysis, backcasting, 3 horizons, horizon scanning, systems mapping, supply chain modeling
+**Focus areas:** Decentralised infrastructure, Web3, data sovereignty/privacy, blockchain-based hosting, pay-per-use compute models
+**Methods:** Internet Computer canister development, distributed systems architecture, cryptographic access control
 
-### 3. Aeonic Flourishing
-Long-term human flourishing within planetary boundaries, integrating wellbeing, justice, and ecological sustainability.
+### 3. Spatial Web R&D & Applied Experiences
+Applied research and commissioned builds demonstrating the toolkit in practice — physics simulations, studio/architectural visualisation, and other bespoke immersive experiences.
 
-**Focus areas:** Wellbeing, capabilities approach, planetary boundaries, intergenerational justice, indigenous wisdom, commons governance, community resilience
-**Methods:** Capabilities approach, socio-ecological systems, commons governance, participatory action research, philosophical synthesis
+**Focus areas:** Physics simulation, visualisation, digital commons, ethical/values-led technology design
+**Methods:** Applied Unity/WebXR development, client project scoping, open publication of learnings
 
-## Cross-Cutting Priorities
-- Systemic/paradigmatic change (not incremental)
-- Interdisciplinary collaboration
-- Action research with real-world impact
-- Public engagement and policy influence
-- Collapse/extinction risk mitigation
-- Institutional innovation
-- Knowledge translation and capacity building
+## Cross-Cutting Values
+- Agency, frugality, plurality (see Exeud company values)
+- Open-source-first, self-hostable, privacy-respecting by default
+- Small, founder-led team prioritising long-term sustainability
 
 ## Ideal Grant Characteristics
-- **Scope:** Ambitious, systemic interventions (not narrow technical fixes)
-- **Approach:** Interdisciplinary, participatory, futures-oriented
-- **Impact:** Policy influence, institutional change, public engagement
-- **Geography:** UK, Europe, global, or strategically important regions
-- **Funding:** £50k-500k for 1-3 years (flexible)
-- **Applicant:** Research orgs, think tanks, NGOs, academic institutions, interdisciplinary teams`;
+- **Scope:** Open-source tooling development, R&D into WebXR/spatial web/decentralised infrastructure
+- **Approach:** Lean, iterative, developer- and community-facing outputs
+- **Impact:** Wider adoption of open, self-hostable immersive tech
+- **Geography:** UK and international (remote-friendly)
+- **Funding:** PLACEHOLDER — typical award size not yet confirmed
+- **Applicant:** Small technology company / studio, open-source maintainer, sole trader or micro-SME`;
 
-const APPLICATION_CONTEXT_DEFAULT = `The Odyssean Institute is a Focused Research Organization (FRO) dedicated to developing comprehensive, legitimate, and tractable approaches to Grand Challenges. We operate at the intersection of democratic innovation, systemic resilience, and long-term human flourishing.
+const APPLICATION_CONTEXT_DEFAULT = `Exeuδ is an immersive technology company building open-source, self-hosted tools for the spatial web, deployed on the Internet Computer. Its flagship product, ExeuδVR, is a no-code/modular WebXR toolkit built on Unity.
 
 ## Our Work
-Our research spans three strands: (1) the Odyssean Process — governance frameworks for decision-making under deep uncertainty using expert elicitation, DMDU, and citizen assemblies; (2) GRAIN — global resilience infrastructure against systemic collapse; and (3) Aeonic Flourishing — long-term wellbeing within planetary boundaries.
+Exeuδ's work spans three strands: (1) the ExeuδVR toolkit — open-source, modular WebXR/Unity software; (2) decentralised hosting — self-hosted virtual spaces on the Internet Computer; and (3) applied spatial-web R&D — commissioned immersive experiences and public writing on ethical technology.
 
 ## Approach
-We are committed to interdisciplinary, participatory approaches that bridge academic rigour with real-world policy impact. Our team brings expertise in futures methodologies, expert elicitation, citizen assemblies, and systems thinking.
+Exeuδ is guided by three core values — agency, frugality, and plurality. The company is open-source-first and privacy-respecting by default.
 
 ## Organisational Capacity
-[Describe past projects, publications, partnerships, and organisational infrastructure relevant to this application.]
+PLACEHOLDER — describe past projects, publications, partnerships, and organisational infrastructure relevant to this application.
 
 ## Strategic Alignment
-[Describe how this specific opportunity aligns with our research agenda and organisational priorities.]`;
+PLACEHOLDER — describe how this specific opportunity aligns with Exeud's open-source WebXR tooling or decentralised hosting work.`;
 
-// ─── Default settings (pre-populated with current Odyssean Institute data) ─────
+// ─── Default settings (pre-populated with Exeud data) ─────
 
 const DEFAULT_SETTINGS: OrgSettings = {
-  name: 'Odyssean Institute',
-  legalName: 'Odyssean Institute',
-  type: 'fro',
-  sector: 'Research & Policy',
-  staffCount: '2-5',
-  yearFounded: '2020',
+  name: 'Exeuδ',
+  legalName: 'Exeuδ', // PLACEHOLDER — confirm registered legal entity name
+  type: 'company',
+  sector: 'Immersive Technology / WebXR',
+  staffCount: '1-5', // PLACEHOLDER
+  yearFounded: '', // PLACEHOLDER
   charityNumber: '',
-  companyNumber: '',
-  website: '',
-  hqCity: 'London',
-  hqCountry: 'UK',
-  description: 'An anchor institution for ambitious, robust methods to address Grand Challenges. Operating as a Focused Research Organization (FRO) targeting real-world impact through interdisciplinary research and democratic innovation.',
-  mission: 'To develop and deploy comprehensive, legitimate, and tractable decision-making processes for addressing Grand Challenges at civilisational scale.',
-  vision: 'A world where humanity\'s most complex challenges are met with commensurate ambition, rigour, and democratic legitimacy — and where long-term flourishing is the guiding measure of success.',
+  companyNumber: '', // PLACEHOLDER
+  website: 'https://exeud.com',
+  hqCity: '', // PLACEHOLDER
+  hqCountry: '', // PLACEHOLDER
+  description: 'An immersive technology company building open-source, self-hosted tools for the spatial web. Creator of ExeuδVR, a modular WebXR toolkit built on Unity, deployed on the Internet Computer for data autonomy and full code ownership.',
+  mission: 'To build a better web through open-source, self-hostable immersive technology — giving people and organisations full ownership of their virtual spaces and data, rather than dependence on centralised platforms.',
+  vision: 'A spatial web grounded in eudaimonia (human flourishing): open, self-hosted, and privacy-respecting by default, where agency, frugality, and plurality guide how technology is built and used.',
   programmes: [
     {
-      id: 'odyssean-process',
-      name: 'Odyssean Process',
-      description: 'A modular method for comprehensive, legitimate, and tractable decision making under conditions of extreme risk and uncertainty. Integrates expert elicitation, DMDU modeling, and citizen assemblies.',
-      keywords: ['decision making', 'governance', 'democracy', 'democratic innovation', 'participatory democracy', 'deliberative democracy', 'citizen assembly', 'expert elicitation', 'risk', 'uncertainty', 'deep uncertainty', 'policy', 'AI governance', 'climate policy', 'systemic reform', 'institutional reform', 'polarization', 'consensus building'],
-      themes: ['democratic legitimacy', 'public trust', 'governance quality', 'systemic change', 'paradigm shift', 'institutional capacity', 'political reform', 'civic engagement'],
-      methodologies: ['expert elicitation', 'DMDU', 'exploratory modeling', 'scenario planning', 'citizen assemblies', 'deliberative polling', 'participatory methods', 'futures methodologies'],
-      outputTypes: ['policy recommendations', 'governance frameworks', 'deliberative processes', 'institutional designs', 'public engagement tools', 'documentary', 'educational curriculum'],
+      id: 'exeudvr-toolkit',
+      name: 'ExeuδVR Toolkit',
+      description: 'An open-source (MPL 2.0), no-code/modular WebXR toolkit built on the Unity engine, enabling developers and clients to design and deploy VR experiences that run in-browser on VR, desktop, and mobile devices.',
+      keywords: ['WebXR', 'virtual reality', 'VR', 'immersive technology', 'spatial web', 'open source', 'Unity', 'no-code', 'modular software', 'cross-platform', '3D rendering', 'game engine', 'developer tooling'],
+      themes: ['open-source software', 'immersive computing', 'accessibility of development tools', 'cross-platform experiences', 'modular architecture'],
+      methodologies: ['Unity engine development', 'WebXR standards implementation', 'open-source library maintenance', 'modular/reusable code architecture'],
+      outputTypes: ['open-source toolkit releases', 'developer documentation', 'VR/WebXR experiences', 'reusable software modules'],
     },
     {
-      id: 'grain',
-      name: 'GRAIN (Global Resilient Anticipatory Infrastructure Network)',
-      description: 'Identifying key commodities, logistical hubs, and institutional qualities enabling recovery from, and reduction of exposure to global collapse or extinction.',
-      keywords: ['resilience', 'infrastructure', 'supply chain', 'critical commodities', 'trade', 'logistics', 'futures', 'foresight', 'anticipatory', 'sustainability', 'development economics', 'circular economy', 'agroecology', 'onshoring', 'globalization'],
-      themes: ['global resilience', 'collapse prevention', 'extinction risk', 'material flows', 'institutional capacity', 'technological innovation', 'adaptive capacity', 'positive tipping points'],
-      methodologies: ['causal layered analysis', 'CLA', 'backcasting', '3 horizons framework', 'horizon scanning', 'systems mapping', 'trade analysis', 'supply chain modeling'],
-      outputTypes: ['resilience frameworks', 'infrastructure designs', 'technology incubation', 'trade policy', 'industrial strategy', 'case studies', 'partnership models'],
+      id: 'decentralised-hosting',
+      name: 'Decentralised Hosting & Data Autonomy',
+      description: 'Self-hosting virtual spaces and applications on the Internet Computer blockchain, giving clients full code ownership, controller delegation, and data privacy.',
+      keywords: ['Internet Computer', 'blockchain', 'Web3', 'decentralisation', 'data autonomy', 'data privacy', 'self-hosting', 'digital sovereignty', 'distributed systems', 'canister', 'pay-per-use'],
+      themes: ['data autonomy', 'digital self-determination', 'decentralised infrastructure', 'privacy by design'],
+      methodologies: ['Internet Computer canister development', 'distributed systems architecture', 'cryptographic access control'],
+      outputTypes: ['self-hosted deployments', 'decentralised infrastructure', 'hosting frameworks', 'technical documentation'],
     },
     {
-      id: 'aeonic-flourishing',
-      name: 'Aeonic Flourishing',
-      description: 'Conceptualising a truly long-term yet ambitious, integrative view of human flourishing, in the context of accelerating crises and encroaching planetary boundaries.',
-      keywords: ['wellbeing', 'flourishing', 'capabilities', 'capabilities approach', 'planetary boundaries', 'sustainability', 'justice', 'equity', 'intergenerational', 'long term', 'indigenous knowledge', 'commons', 'doughnut economics', 'buen vivir', 'community'],
-      themes: ['human flourishing', 'existential hope', 'ecological sustainability', 'social justice', 'intergenerational fairness', 'community resilience', 'cultural wisdom', 'paradigm transformation'],
-      methodologies: ['capabilities approach', 'socio-ecological systems', 'commons governance', 'participatory action research', 'philosophical synthesis', 'interdisciplinary integration'],
-      outputTypes: ['theoretical frameworks', 'wellbeing indicators', 'community projects', 'local governance models', 'philosophical synthesis', 'practical interventions'],
+      id: 'spatial-web-rd',
+      name: 'Spatial Web R&D & Applied Experiences',
+      description: 'Applied research and commissioned builds demonstrating the toolkit in practice — physics simulations, studio/architectural visualisation, and other bespoke immersive experiences.',
+      keywords: ['physics simulation', 'visualisation', 'studio visualisation', 'applied research', 'digital commons', 'ethical technology', 'public engagement', 'education'],
+      themes: ['applied R&D', 'ethical/values-led technology', 'public communication of technology', 'digital commons'],
+      methodologies: ['applied Unity/WebXR development', 'client project scoping', 'open publication of learnings'],
+      outputTypes: ['commissioned VR experiences', 'simulations', 'visualisations', 'blog posts/articles', 'case studies'],
     },
   ],
-  crossCuttingThemes: ['systemic change', 'paradigmatic change', 'interdisciplinary', 'transdisciplinary', 'action research', 'focused research organization', 'public engagement', 'real world impact', 'policy impact', 'collapse risk', 'extinction risk', 'existential risk', 'tipping points', 'complexity', 'innovation', 'knowledge translation', 'capacity building'],
-  geographicPriorities: ['global', 'international', 'UK', 'United Kingdom', 'Europe', 'European', 'developing countries', 'global south', 'Singapore', 'Switzerland', 'Nordic countries'],
-  applicantTypeDescriptions: ['research organization', 'think tank', 'NGO', 'civil society', 'academic institution', 'independent researcher', 'interdisciplinary team', 'collaboration', 'partnership'],
+  crossCuttingThemes: ['agency', 'frugality', 'plurality', 'eudaimonia', 'human flourishing', 'open source', 'self-hosting', 'data privacy', 'decentralisation', 'ethical technology', 'sustainability', 'modular design', 'community feedback'],
+  geographicPriorities: ['UK', 'United Kingdom', 'international', 'global', 'remote'], // PLACEHOLDER
+  applicantTypeDescriptions: ['technology company', 'software studio', 'open-source maintainer', 'micro-SME', 'sole trader', 'startup'],
   discoveryContext: DISCOVERY_CONTEXT_DEFAULT,
   alignmentContext: DISCOVERY_CONTEXT_DEFAULT,
   applicationContext: APPLICATION_CONTEXT_DEFAULT,
-  fundingMinAward: 10000,
-  fundingIdealMin: 50000,
-  fundingIdealMax: 500000,
-  fundingMaxAward: 2000000,
-  durationMinMonths: 6,
-  durationIdealMin: 12,
-  durationIdealMax: 36,
-  durationMaxMonths: 60,
-  preferredCurrencies: ['GBP', 'EUR', 'USD'],
+  fundingMinAward: 1000,
+  fundingIdealMin: 5000,
+  fundingIdealMax: 150000,
+  fundingMaxAward: 500000,
+  durationMinMonths: 1,
+  durationIdealMin: 3,
+  durationIdealMax: 18,
+  durationMaxMonths: 36,
+  preferredCurrencies: ['GBP', 'USD', 'EUR'],
   primaryLogoUrl: '',
   secondaryLogoUrl: '',
-  primaryColour: '#2874A6',
-  secondaryColour: '#1e3a5f',
-  accentColour: '#5DADE2',
+  primaryColour: '#6C3BAA',
+  secondaryColour: '#2D1B4E',
+  accentColour: '#B388EB',
   preferredLlmProvider: 'gemini',
   discoveryTemperature: 0,
   alignmentTemperature: 0.3,

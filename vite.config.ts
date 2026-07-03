@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig({
-  base: '/grant-manager/',
+  base: '/exeud-grants/',
   plugins: [react()],
   resolve: {
     alias: {

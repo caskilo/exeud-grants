@@ -1,11 +1,11 @@
 :root {
-  /* Odyssean Institute Brand Colors (Extracted) */
-  --color-odyssean: #1e3a5f;
+  /* PLACEHOLDER — Exeud Brand Colors (not confirmed against real brand assets) */
+  --color-exeud: #2D1B4E;
   --color-grain: #0c3a29;
   --color-white: #FFFFFF;
   
   /* Extended Brand Palette */
-  --color-strategic: #2874A6;
+  --color-strategic: #6C3BAA;
   --color-flourishing: #27AE60;
   --color-neutral: #95A5A6;
   --color-authority: #2C3E50;
@@ -18,11 +18,11 @@
   --color-border: #BDC3C7;
   
   /* Semantic Aliases */
-  --color-primary: var(--color-odyssean);
+  --color-primary: var(--color-exeud);
   --color-success: var(--color-grain);
   --color-warning: var(--color-strategic);
   --color-error: var(--color-authority);
-  --color-info: var(--color-odyssean);
+  --color-info: var(--color-exeud);
   
   /* Spacing */
   --spacing-xs: 0.25rem;

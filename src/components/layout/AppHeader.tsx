@@ -128,7 +128,7 @@ export default function AppHeader() {
           <CrowsNestLogo size={40} />
           <Box>
             <Title order={3} className="ody-header-title" style={{ fontSize: '1.25rem', lineHeight: 1.5 }}>
-              Odyssean Grant Manager
+              Exeud Grants
             </Title>
           </Box>
         </Group>

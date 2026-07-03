@@ -131,7 +131,7 @@ export default function LoginPage() {
         <Stack align="center" gap={4} mb="xl">
           <IconCompass size={44} stroke={1.5} color="#1a6b8a" />
           <Title order={2} ta="center" style={{ color: '#0d2847', letterSpacing: '-0.5px' }}>
-            Odyssean Institute
+            Exeud
           </Title>
           <Text size="sm" c="dimmed" ta="center">
             Grant Management System

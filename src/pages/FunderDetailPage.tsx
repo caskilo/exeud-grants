@@ -417,7 +417,7 @@ export default function FunderDetailPage() {
                 <Paper p="md" withBorder shadow="sm" style={{ background: 'linear-gradient(135deg, rgba(12, 58, 41, 0.02) 0%, rgba(39, 174, 96, 0.03) 100%)' }}>
                   <Stack gap="md">
                     <Group justify="space-between">
-                      <Title order={4} c="#0c3a29">Odyssean Alignment</Title>
+                      <Title order={4} c="#0c3a29">Exeud Alignment</Title>
                       <ThemeIcon size="lg" variant="light" color="violet"><IconSparkles size={20} /></ThemeIcon>
                     </Group>
                     {(() => {

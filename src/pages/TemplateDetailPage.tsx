@@ -416,7 +416,7 @@ export default function TemplateDetailPage() {
                   description="Comma-separated tags for search and filtering"
                   value={tags}
                   onChange={(e) => { setTags(e.currentTarget.value); markChanged(); }}
-                  placeholder="e.g. core, odyssean-process, governance"
+                  placeholder="e.g. development, design, automation"
                 />
               </Group>
 
