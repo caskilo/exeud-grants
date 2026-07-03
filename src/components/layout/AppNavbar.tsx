@@ -98,9 +98,7 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
       />
     ));
 
-  return (
-    <>
-      <style>{`
+  const navbarStyles = `
         .ody-nav-item { color: rgba(255,255,255,0.65); transition: background 140ms, color 140ms; }
         .ody-nav-item:hover { background: rgba(255,255,255,0.09) !important; color: rgba(255,255,255,0.95) !important; }
         .ody-nav-item[data-active] { background: rgba(142, 95, 194, 0.22) !important; color: ${theme.colors.exeud[2]} !important; box-shadow: inset 3px 0 0 0 ${theme.colors.exeud[3]}; }
@@ -109,7 +107,11 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
         .ody-nav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 4px; }
         .ody-nav-toggle { color: rgba(255,255,255,0.35); transition: background 140ms, color 140ms; }
         .ody-nav-toggle:hover { background: rgba(255,255,255,0.09) !important; color: rgba(255,255,255,0.7) !important; }
-      `}</style>
+      `;
+
+  return (
+    <>
+      <style>{navbarStyles}</style>
 
       <Box style={{
         height: '100%',

@@ -85,9 +85,7 @@ export default function AppHeader() {
     }
   };
 
-  return (
-    <>
-      <style>{`
+  const headerStyles = `
         .ody-header {
           background: ${theme.other.gradients.header};
           border-bottom: 1px solid rgba(179, 136, 235, 0.15);
@@ -115,7 +113,11 @@ export default function AppHeader() {
         .ody-user-pill:hover {
           background: rgba(255, 255, 255, 0.12);
         }
-      `}</style>
+      `;
+
+  return (
+    <>
+      <style>{headerStyles}</style>
 
       <Group
         h="100%"
