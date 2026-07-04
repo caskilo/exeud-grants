@@ -5,35 +5,7 @@ import api from '../../lib/api';
 import { notifications } from '@mantine/notifications';
 import { useState } from 'react';
 import { IconKey, IconLogout, IconChevronDown } from '@tabler/icons-react';
-
-/** Crow's Nest Logo - A stylized ship's lookout tower spotting the horizon */
-function CrowsNestLogo({ size = 40 }: { size?: number }) {
-  const theme = useMantineTheme();
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 40 40"
-      style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}
-    >
-      {/* Crow's nest */}
-      <ellipse cx="20" cy="22" rx="10" ry="6" fill="none" stroke={theme.colors.exeud[2]} strokeWidth="2" />
-      {/* Support ropes */}
-      <line x1="10" y1="22" x2="8" y2="32" stroke={theme.colors.exeud[2]} strokeWidth="2.5" opacity="0.7" />
-      <line x1="30" y1="22" x2="32" y2="32" stroke={theme.colors.exeud[2]} strokeWidth="2.5" opacity="0.7" />
-      {/* Horizon/search arc */}
-      <path
-        d="M8 14 Q20 8 32 14"
-        fill="none"
-        stroke={theme.colors.exeud[4]}
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      {/* The spotter/dot on horizon */}
-      <circle cx="20" cy="11" r="2" fill={theme.colors.exeud[3]} />
-    </svg>
-  );
-}
+import ExeudLogo from '../../assets/ExeudLogo';
 
 export default function AppHeader() {
   const user = useAuthStore((state) => state.user);
@@ -129,7 +101,7 @@ export default function AppHeader() {
       >
         {/* Left: Logo + Title */}
         <Group gap="sm">
-          <CrowsNestLogo size={40} />
+          <ExeudLogo size={40} />
           <Box>
             <Title order={3} className="ody-header-title" style={{ fontSize: '1.25rem', lineHeight: 1.5 }}>
               Exeud Grants
