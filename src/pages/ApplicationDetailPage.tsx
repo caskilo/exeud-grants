@@ -69,7 +69,7 @@ function wordCount(text: string): number {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
-type LlmProvider = 'gemini' | 'anthropic';
+type LlmProvider = 'gemini' | 'anthropic' | 'minimax';
 
 /**
  * Derive the LLM provider from an application's `generatedFrom` field. Recognises
@@ -83,6 +83,7 @@ function getProviderFromGeneratedFrom(
   if (!generatedFrom) return null;
   const lower = generatedFrom.toLowerCase();
   if (lower.includes('gemini')) return 'gemini';
+  if (lower.includes('minimax')) return 'minimax';
   if (lower.includes('anthropic') || lower.includes('claude') ||
       lower.includes('haiku') || lower.includes('sonnet') || lower.includes('opus')) {
     return 'anthropic';
@@ -517,6 +518,7 @@ export default function ApplicationDetailPage() {
                         data={[
                           { value: 'gemini', label: 'Gemini' },
                           { value: 'anthropic', label: 'Claude' },
+                          { value: 'minimax', label: 'MiniMax' },
                         ]}
                       />
                       <Text size="xs" c="dimmed" mt={2}>
@@ -550,7 +552,7 @@ export default function ApplicationDetailPage() {
                         const amt = typeof editAwardAmount === 'number' ? editAwardAmount : parseFloat(String(editAwardAmount));
                         if (!isNaN(amt) && amt > 0) data.expectedAwardAmount = amt;
                         if (editCurrency) data.expectedCurrency = editCurrency;
-                        const newGeneratedFrom = editProvider === 'gemini' ? 'llm_gemini' : 'llm_anthropic';
+                        const newGeneratedFrom = editProvider === 'gemini' ? 'llm_gemini' : editProvider === 'minimax' ? 'llm_minimax' : 'llm_anthropic';
                         if (newGeneratedFrom !== (application.generatedFrom || '')) {
                           data.generatedFrom = newGeneratedFrom;
                         }
@@ -584,6 +586,8 @@ export default function ApplicationDetailPage() {
                           ? 'blue'
                           : getProviderFromGeneratedFrom(application.generatedFrom) === 'anthropic'
                           ? 'orange'
+                          : getProviderFromGeneratedFrom(application.generatedFrom) === 'minimax'
+                          ? 'grape'
                           : 'gray'
                       }
                     >

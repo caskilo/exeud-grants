@@ -192,7 +192,7 @@ function getDeadlineDescription(deadlines: DeadlineEntry[] | string[] | null): s
 // Weights MUST mirror backend ALIGNMENT_WEIGHTS in organisation-defaults.ts
 // (sum = 1.0). If you change one, change the other.
 const DIM_WEIGHTS: Record<string, number> = {
-  'Research Strand Match': 0.35,
+  'Programme Match': 0.35,
   'Methodological Fit': 0.20,
   'Thematic Alignment': 0.20,
   'Impact Potential': 0.15,
@@ -203,7 +203,7 @@ const DIM_WEIGHTS: Record<string, number> = {
 function extractDimensions(tags: string[]): Record<string, number> {
   const dims: Record<string, number> = {};
   const dimLabels: Record<string, string> = {
-    'dim:research': 'Research Strand Match',
+    'dim:research': 'Programme Match',
     'dim:method': 'Methodological Fit',
     'dim:theme': 'Thematic Alignment',
     'dim:impact': 'Impact Potential',
@@ -328,6 +328,7 @@ export default function OpportunityDetailPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['opportunity', id] });
+      queryClient.invalidateQueries({ queryKey: ['opportunities'] });
       notifications.show({ title: 'Rescored', message: 'Alignment scores updated.', color: 'teal', autoClose: 3000 });
     },
     onError: () => {
@@ -909,24 +910,24 @@ export default function OpportunityDetailPage() {
                       </Text>
                       <List size="xs" spacing="xs">
                         <List.Item>
-                          <Text span fw={500}>Research Strand Match (35%):</Text> Alignment with Exeud's three programmes - 
-                          ExeuδVR Toolkit, Decentralised Hosting, and Spatial Web R&D
+                          <Text span fw={500}>Programme Match (35%):</Text> Alignment with Exeuδ's three programmes —
+                          ExeuδVR Toolkit & Automated Deployment (high priority), Applied Immersive Experiences & R&D (medium), and Decentralised Hosting (lower)
                         </List.Item>
                         <List.Item>
-                          <Text span fw={500}>Methodological Fit (20%):</Text> Preference for interdisciplinary, long-term, 
-                          exploratory research with practical applications
+                          <Text span fw={500}>Methodological Fit (20%):</Text> Match with the organisation's development methodologies —
+                          Unity 6, WebXR, WebAssembly, P2P networking, open-source software development, Blender/3D modelling
                         </List.Item>
                         <List.Item>
-                          <Text span fw={500}>Thematic Alignment (20%):</Text> Match with cross-cutting themes like 
-                          collective intelligence, governance innovation, and human development
+                          <Text span fw={500}>Thematic Alignment (20%):</Text> Match with cross-cutting themes like
+                          open source, self-hosting, data privacy, education, training, cultural heritage, and ethical technology
                         </List.Item>
                         <List.Item>
-                          <Text span fw={500}>Impact Potential (15%):</Text> Potential for transformative outcomes and 
-                          contribution to Exeud's mission
+                          <Text span fw={500}>Impact Potential (15%):</Text> Potential for tangible outputs — toolkit releases,
+                          live demonstrations, deployed experiences, open-source code — that advance the experiential web
                         </List.Item>
                         <List.Item>
-                          <Text span fw={500}>Practical Feasibility (10%):</Text> Geographic fit, funding amount, 
-                          timeline compatibility, and administrative requirements
+                          <Text span fw={500}>Practical Feasibility (10%):</Text> Funding amount, timeline, geographic fit,
+                          applicant type compatibility, and match funding requirements for a 1-5 person UK company
                         </List.Item>
                       </List>
                       <Text size="xs" c="dimmed" mt="xs">
@@ -1003,6 +1004,34 @@ export default function OpportunityDetailPage() {
                         </>
                       )}
                     </Stack>
+                  </Paper>
+                )}
+
+                {/* Confidence and overall reasoning */}
+                {hasDimensions && opportunity.aiConfidence != null && (
+                  <Paper p="md" withBorder>
+                    <Group justify="space-between" mb="xs">
+                      <Text size="sm" fw={500}>Confidence</Text>
+                      <Badge
+                        size="sm"
+                        color={Number(opportunity.aiConfidence) >= 0.7 ? 'green' : Number(opportunity.aiConfidence) >= 0.4 ? 'yellow' : 'gray'}
+                        variant="light"
+                      >
+                        {Math.round(Number(opportunity.aiConfidence) * 100)}%
+                      </Badge>
+                    </Group>
+                    <Progress
+                      value={Math.round(Number(opportunity.aiConfidence) * 100)}
+                      color={Number(opportunity.aiConfidence) >= 0.7 ? 'green' : Number(opportunity.aiConfidence) >= 0.4 ? 'yellow' : 'gray'}
+                      size="sm"
+                    />
+                    <Text size="xs" c="dimmed" mt="xs">
+                      {Number(opportunity.aiConfidence) >= 0.7
+                        ? 'High confidence — the LLM had enough information to make a well-grounded assessment.'
+                        : Number(opportunity.aiConfidence) >= 0.4
+                        ? 'Moderate confidence — some ambiguity in the source material or scoring criteria.'
+                        : 'Low confidence — limited information or unusual opportunity structure. Review manually.'}
+                    </Text>
                   </Paper>
                 )}
                 </>

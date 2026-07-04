@@ -1,7 +1,8 @@
-import { Box, Tooltip, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core';
+import { Box, Tooltip, Stack, Text, UnstyledButton } from '@mantine/core';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { type ComponentType } from 'react';
 import { useAuthStore } from '../../stores/authStore';
+import { useOrgBranding, darkenHex } from '../../hooks/useOrgBranding';
 import {
   IconLayoutDashboard,
   IconBuildingBank,
@@ -17,7 +18,7 @@ import {
   IconBook,
 } from '@tabler/icons-react';
 
-interface NavItemDef {
+export interface NavItemDef {
   testid?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Icon: ComponentType<any>;
@@ -25,14 +26,14 @@ interface NavItemDef {
   path: string;
 }
 
-const PRIMARY: NavItemDef[] = [
+export const PRIMARY: NavItemDef[] = [
   { testid: 'nav-dashboard',     Icon: IconLayoutDashboard, label: 'Dashboard',     path: '/dashboard' },
   { testid: 'nav-funders',       Icon: IconBuildingBank,    label: 'Funders',       path: '/funders' },
   { testid: 'nav-opportunities', Icon: IconBulb,            label: 'Opportunities', path: '/opportunities' },
   { testid: 'nav-applications',  Icon: IconFileDescription, label: 'Applications',  path: '/applications' },
 ];
 
-const SECONDARY: NavItemDef[] = [
+export const SECONDARY: NavItemDef[] = [
   { Icon: IconTemplate,    label: 'Templates',    path: '/templates' },
   { Icon: IconAddressBook, label: 'Contacts',     path: '/contacts' },
   { Icon: IconMessages,    label: 'Interactions', path: '/interactions' },
@@ -84,7 +85,9 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
   const navigate = useNavigate();
   const location = useLocation();
   const user = useAuthStore((state) => state.user);
-  const theme = useMantineTheme();
+  const branding = useOrgBranding();
+  const cDark = darkenHex(branding.primaryColour, 0.3);
+  const cSecondary = branding.secondaryColour;
   const isActive = (path: string) => location.pathname.startsWith(path);
 
   const navGroup = (items: NavItemDef[]) =>
@@ -100,13 +103,13 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
 
   const navbarStyles = `
         .ody-nav-item { color: rgba(255,255,255,0.65); transition: background 140ms, color 140ms; }
-        .ody-nav-item:hover { background: rgba(255,255,255,0.09) !important; color: rgba(255,255,255,0.95) !important; }
-        .ody-nav-item[data-active] { background: rgba(142, 95, 194, 0.22) !important; color: ${theme.colors.exeud[2]} !important; box-shadow: inset 3px 0 0 0 ${theme.colors.exeud[3]}; }
+        .ody-nav-item:hover { background: ${branding.secondaryColour}55 !important; color: rgba(255,255,255,0.95) !important; }
+        .ody-nav-item[data-active] { background: ${branding.primaryColour}38 !important; color: ${branding.accentColour} !important; box-shadow: inset 3px 0 0 0 ${branding.secondaryColour}; }
         .ody-nav-label { color: inherit; font-size: 14px; }
         .ody-nav-section { color: rgba(255,255,255,0.28); font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 4px 14px 2px; }
         .ody-nav-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 4px; }
         .ody-nav-toggle { color: rgba(255,255,255,0.35); transition: background 140ms, color 140ms; }
-        .ody-nav-toggle:hover { background: rgba(255,255,255,0.09) !important; color: rgba(255,255,255,0.7) !important; }
+        .ody-nav-toggle:hover { background: ${branding.secondaryColour}44 !important; color: rgba(255,255,255,0.7) !important; }
       `;
 
   return (
@@ -115,7 +118,7 @@ export default function AppNavbar({ collapsed, onToggle, onOpenGuide }: AppNavba
 
       <Box style={{
         height: '100%',
-        background: theme.other.gradients.navbar,
+        background: `linear-gradient(175deg, ${cDark} 0%, ${cSecondary} 100%)`,
         display: 'flex',
         flexDirection: 'column',
         padding: '12px 8px',

@@ -1,19 +1,23 @@
 import { Group, Title, Button, Text, Box, Menu, Modal, Stack, PasswordInput, useMantineTheme } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import api from '../../lib/api';
 import { notifications } from '@mantine/notifications';
 import { useState } from 'react';
 import { IconKey, IconLogout, IconChevronDown } from '@tabler/icons-react';
 import ExeudLogo from '../../assets/ExeudLogo';
+import { useOrgBranding } from '../../hooks/useOrgBranding';
+import { PRIMARY, SECONDARY, type NavItemDef } from './AppNavbar';
 
 export default function AppHeader() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useMantineTheme();
 
   const [pwModalOpen, setPwModalOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [currentPw, setCurrentPw] = useState('');
   const [newPw, setNewPw] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
@@ -57,23 +61,27 @@ export default function AppHeader() {
     }
   };
 
+  const branding = useOrgBranding();
+  const cPrimary = branding.primaryColour;
+  const cSecondary = branding.secondaryColour;
+
   const headerStyles = `
         .ody-header {
-          background: ${theme.other.gradients.header};
-          border-bottom: 1px solid rgba(179, 136, 235, 0.15);
+          background: linear-gradient(90deg, ${cSecondary} 0%, ${cPrimary} 50%, ${cSecondary} 100%);
+          border-bottom: 1px solid ${branding.accentColour}26;
           box-shadow: ${theme.other.shadows.header};
         }
         .ody-header-title {
           font-family: 'Inter', system-ui, sans-serif;
           letter-spacing: -0.02em;
-          background: ${theme.other.gradients.title};
+          background: linear-gradient(135deg, #ffffff 0%, ${branding.accentColour} 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
         .ody-user-pill {
           background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(179, 136, 235, 0.2);
+          border: 1px solid ${branding.accentColour}33;
           border-radius: 20px;
           padding: 4px 10px 4px 14px;
           cursor: pointer;
@@ -99,12 +107,90 @@ export default function AppHeader() {
         className="ody-header"
         style={{ width: '100%' }}
       >
-        {/* Left: Logo + Title */}
+        {/* Left: Logo + Title + Mobile nav */}
         <Group gap="sm">
-          <ExeudLogo size={40} />
-          <Box>
+          <Menu
+            shadow="md"
+            width={220}
+            position="bottom-start"
+            withArrow
+            opened={mobileNavOpen}
+            onChange={setMobileNavOpen}
+          >
+            <Menu.Target>
+              <Box style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} className="ody-mobile-nav-trigger">
+                <ExeudLogo
+                  size={40}
+                  logoUrl={branding.primaryLogoUrl || undefined}
+                  brandColours={{
+                    primary: branding.primaryColour,
+                    secondary: branding.secondaryColour,
+                    accent: branding.accentColour,
+                  }}
+                />
+              </Box>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Label>Core</Menu.Label>
+              {PRIMARY.map((item: NavItemDef) => (
+                <Menu.Item
+                  key={item.path}
+                  leftSection={<item.Icon size={16} />}
+                  color={location.pathname.startsWith(item.path) ? branding.accentColour : undefined}
+                  onClick={() => { navigate(item.path); setMobileNavOpen(false); }}
+                >
+                  {item.label}
+                </Menu.Item>
+              ))}
+              <Menu.Divider />
+              <Menu.Label>Tools</Menu.Label>
+              {SECONDARY.map((item: NavItemDef) => (
+                <Menu.Item
+                  key={item.path}
+                  leftSection={<item.Icon size={16} />}
+                  color={location.pathname.startsWith(item.path) ? branding.accentColour : undefined}
+                  onClick={() => { navigate(item.path); setMobileNavOpen(false); }}
+                >
+                  {item.label}
+                </Menu.Item>
+              ))}
+              {user?.role === 'ADMIN' && (
+                <>
+                  <Menu.Divider />
+                  <Menu.Label>Admin</Menu.Label>
+                  <Menu.Item
+                    leftSection={<IconKey size={16} />}
+                    onClick={() => { navigate('/admin/users'); setMobileNavOpen(false); }}
+                  >
+                    Users
+                  </Menu.Item>
+                  <Menu.Item
+                    leftSection={<IconKey size={16} />}
+                    onClick={() => { navigate('/admin/organisation'); setMobileNavOpen(false); }}
+                  >
+                    Organisation
+                  </Menu.Item>
+                </>
+              )}
+              <Menu.Divider />
+              <Menu.Item
+                leftSection={<IconKey size={14} />}
+                onClick={() => { resetPwForm(); setPwModalOpen(true); setMobileNavOpen(false); }}
+              >
+                Change password
+              </Menu.Item>
+              <Menu.Item
+                leftSection={<IconLogout size={14} />}
+                color="red"
+                onClick={handleLogout}
+              >
+                Logout
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+          <Box className="ody-header-title-box">
             <Title order={3} className="ody-header-title" style={{ fontSize: '1.25rem', lineHeight: 1.5 }}>
-              Exeud Grants
+              {branding.name} Grants
             </Title>
           </Box>
         </Group>

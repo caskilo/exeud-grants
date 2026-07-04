@@ -347,7 +347,7 @@ const organisation: GuideModule = {
       heading: 'System Tab',
       content:
         'LLM configuration:\n\n' +
-        '• **Preferred LLM provider** — Gemini (default), Anthropic Claude, or Auto. The active provider is also controlled by the `LLM_PROVIDER` environment variable on the backend.\n' +
+        '• **Preferred LLM provider** — Anthropic Claude (default), Gemini, MiniMax, or Auto. The active provider is also controlled by the `LLM_PROVIDER` environment variable on the backend.\n' +
         '• **Temperature per use case** — separate temperature values for discovery (default 0, deterministic), alignment scoring (default 0.3), and application writing (default 0.7, more generative).',
     },
     {

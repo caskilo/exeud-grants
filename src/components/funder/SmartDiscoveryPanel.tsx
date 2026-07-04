@@ -84,7 +84,7 @@ export default function SmartDiscoveryPanel({
   const [searchDepth, setSearchDepth] = useState<'shallow' | 'standard' | 'deep'>(
     () => loadPersistedConfig().searchDepth ?? 'standard'
   );
-  const [llmProvider, setLlmProvider] = useState<'gemini' | 'anthropic'>(
+  const [llmProvider, setLlmProvider] = useState<'gemini' | 'anthropic' | 'minimax'>(
     () => loadPersistedConfig().llmProvider ?? 'gemini'
   );
   const [showConfig, { toggle: toggleConfig }] = useDisclosure(
@@ -289,8 +289,8 @@ export default function SmartDiscoveryPanel({
                 <Text size="sm" c="dimmed">AI-powered extraction from funder websites</Text>
               </div>
             </Group>
-            <Badge size="lg" variant="light" color={llmProvider === 'gemini' ? 'blue' : 'orange'}>
-              {llmProvider === 'gemini' ? '🧠 Gemini' : '🧠 Anthropic'}
+            <Badge size="lg" variant="light" color={llmProvider === 'gemini' ? 'blue' : llmProvider === 'anthropic' ? 'orange' : 'grape'}>
+              {llmProvider === 'gemini' ? '🧠 Gemini' : llmProvider === 'anthropic' ? '🧠 Anthropic' : '🧠 MiniMax'}
             </Badge>
           </Group>
         </Stack>
@@ -314,10 +314,11 @@ export default function SmartDiscoveryPanel({
                 <Text size="sm" fw={500} mb="xs">LLM Provider</Text>
                 <SegmentedControl
                   value={llmProvider}
-                  onChange={(v) => { setLlmProvider(v as 'gemini' | 'anthropic'); persistConfig({ llmProvider: v }); }}
+                  onChange={(v) => { setLlmProvider(v as 'gemini' | 'anthropic' | 'minimax'); persistConfig({ llmProvider: v }); }}
                   data={[
                     { value: 'gemini', label: 'Gemini (Fast & Cheap)' },
                     { value: 'anthropic', label: 'Claude (High Quality)' },
+                    { value: 'minimax', label: 'MiniMax (Reasoning)' },
                   ]}
                   fullWidth
                 />

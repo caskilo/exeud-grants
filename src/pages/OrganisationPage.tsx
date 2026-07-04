@@ -27,6 +27,7 @@ interface Programme {
   themes: string[];
   methodologies: string[];
   outputTypes: string[];
+  priority: 'high' | 'medium' | 'low';
 }
 
 interface OrgSettings {
@@ -74,15 +75,24 @@ interface OrgSettings {
 // ─── Options ───────────────────────────────────────────────────────────────────
 
 const ORG_TYPE_OPTIONS = [
+  { value: 'limited_company', label: 'Limited Company (Ltd)' },
+  { value: 'public_limited_company', label: 'Public Limited Company (PLC)' },
+  { value: 'cic', label: 'Community Interest Company (CIC)' },
+  { value: 'charity', label: 'Charity / Nonprofit' },
+  { value: 'cio', label: 'Charitable Incorporated Organisation (CIO)' },
+  { value: 'social_enterprise', label: 'Social Enterprise' },
+  { value: 'coop', label: 'Cooperative / Mutual' },
+  { value: 'partnership', label: 'Partnership / LLP' },
+  { value: 'sole_trader', label: 'Sole Trader / Freelancer' },
   { value: 'fro', label: 'Focused Research Organisation (FRO)' },
   { value: 'research_institute', label: 'Research Institute' },
-  { value: 'think_tank', label: 'Think Tank' },
-  { value: 'ngo', label: 'NGO / Charity' },
   { value: 'university', label: 'University / Academic Institution' },
+  { value: 'think_tank', label: 'Think Tank' },
+  { value: 'ngo', label: 'NGO (International)' },
   { value: 'civil_society', label: 'Civil Society Organisation' },
-  { value: 'social_enterprise', label: 'Social Enterprise' },
   { value: 'consultancy', label: 'Consultancy / Agency' },
   { value: 'government', label: 'Government / Public Body' },
+  { value: 'community_group', label: 'Community / Voluntary Group' },
   { value: 'other', label: 'Other' },
 ];
 
@@ -96,8 +106,9 @@ const STAFF_COUNT_OPTIONS = [
 ];
 
 const LLM_PROVIDER_OPTIONS = [
-  { value: 'gemini', label: 'Google Gemini (default)' },
-  { value: 'anthropic', label: 'Anthropic Claude' },
+  { value: 'gemini', label: 'Gemini' },
+  { value: 'anthropic', label: 'Claude' },
+  { value: 'minimax', label: 'MiniMax' },
   { value: 'auto', label: 'Auto (system default)' },
 ];
 
@@ -159,7 +170,7 @@ PLACEHOLDER — describe how this specific opportunity aligns with Exeud's open-
 const DEFAULT_SETTINGS: OrgSettings = {
   name: 'Exeuδ',
   legalName: 'Exeuδ', // PLACEHOLDER — confirm registered legal entity name
-  type: 'company',
+  type: 'limited_company',
   sector: 'Immersive Technology / WebXR',
   staffCount: '1-5', // PLACEHOLDER
   yearFounded: '', // PLACEHOLDER
@@ -174,12 +185,13 @@ const DEFAULT_SETTINGS: OrgSettings = {
   programmes: [
     {
       id: 'exeudvr-toolkit',
-      name: 'ExeuδVR Toolkit',
-      description: 'An open-source (MPL 2.0), no-code/modular WebXR toolkit built on the Unity engine, enabling developers and clients to design and deploy VR experiences that run in-browser on VR, desktop, and mobile devices.',
+      name: 'ExeuδVR Toolkit and Automated Deployment',
+      description: 'An open-source WebXR toolkit built on Unity 6, compiled to WebGL/WebAssembly and deployed as ICP canisters. Six live experiences demonstrate multiplayer physics, collaborative workspaces, cultural heritage, architectural visualisation, simulation, and P2P file exchange. The next milestone is an automated deployment web interface, wrapping the Unity build engine to run headlessly, enabling users to compose, compile, and deploy immersive experiences from a browser.',
       keywords: ['WebXR', 'virtual reality', 'VR', 'immersive technology', 'spatial web', 'open source', 'Unity', 'no-code', 'modular software', 'cross-platform', '3D rendering', 'game engine', 'developer tooling'],
       themes: ['open-source software', 'immersive computing', 'accessibility of development tools', 'cross-platform experiences', 'modular architecture'],
       methodologies: ['Unity engine development', 'WebXR standards implementation', 'open-source library maintenance', 'modular/reusable code architecture'],
       outputTypes: ['open-source toolkit releases', 'developer documentation', 'VR/WebXR experiences', 'reusable software modules'],
+      priority: 'high',
     },
     {
       id: 'decentralised-hosting',
@@ -189,6 +201,7 @@ const DEFAULT_SETTINGS: OrgSettings = {
       themes: ['data autonomy', 'digital self-determination', 'decentralised infrastructure', 'privacy by design'],
       methodologies: ['Internet Computer canister development', 'distributed systems architecture', 'cryptographic access control'],
       outputTypes: ['self-hosted deployments', 'decentralised infrastructure', 'hosting frameworks', 'technical documentation'],
+      priority: 'low',
     },
     {
       id: 'spatial-web-rd',
@@ -198,6 +211,7 @@ const DEFAULT_SETTINGS: OrgSettings = {
       themes: ['applied R&D', 'ethical/values-led technology', 'public communication of technology', 'digital commons'],
       methodologies: ['applied Unity/WebXR development', 'client project scoping', 'open publication of learnings'],
       outputTypes: ['commissioned VR experiences', 'simulations', 'visualisations', 'blog posts/articles', 'case studies'],
+      priority: 'medium',
     },
   ],
   crossCuttingThemes: ['agency', 'frugality', 'plurality', 'eudaimonia', 'human flourishing', 'open source', 'self-hosting', 'data privacy', 'decentralisation', 'ethical technology', 'sustainability', 'modular design', 'community feedback'],
@@ -206,12 +220,12 @@ const DEFAULT_SETTINGS: OrgSettings = {
   discoveryContext: DISCOVERY_CONTEXT_DEFAULT,
   alignmentContext: DISCOVERY_CONTEXT_DEFAULT,
   applicationContext: APPLICATION_CONTEXT_DEFAULT,
-  fundingMinAward: 1000,
-  fundingIdealMin: 5000,
+  fundingMinAward: 5000,
+  fundingIdealMin: 20000,
   fundingIdealMax: 150000,
-  fundingMaxAward: 500000,
-  durationMinMonths: 1,
-  durationIdealMin: 3,
+  fundingMaxAward: 1500000,
+  durationMinMonths: 3,
+  durationIdealMin: 9,
   durationIdealMax: 18,
   durationMaxMonths: 36,
   preferredCurrencies: ['GBP', 'USD', 'EUR'],
@@ -256,6 +270,10 @@ interface ApiOrgSettings extends Omit<OrgSettings,
 function fromApi(s: ApiOrgSettings): OrgSettings {
   return {
     ...s,
+    programmes: (s.programmes || []).map(p => ({
+      ...p,
+      priority: (p as any).priority || 'medium',
+    })),
     fundingMinAward: s.funding?.minAward ?? 10000,
     fundingIdealMin: s.funding?.idealMin ?? 50000,
     fundingIdealMax: s.funding?.idealMax ?? 500000,
@@ -326,10 +344,18 @@ function ProgrammeItem({
   onUpdate: (id: string, patch: Partial<Programme>) => void;
   onDelete: (id: string) => void;
 }) {
+  const priorityColor = prog.priority === 'high' ? 'red' : prog.priority === 'medium' ? 'blue' : 'gray';
   return (
     <Accordion.Item value={prog.id}>
       <Accordion.Control>
-        <Text fw={500} size="sm">{prog.name || <Text component="span" c="dimmed" fs="italic" size="sm">Unnamed programme</Text>}</Text>
+        <Group gap="sm" align="center">
+          <Text fw={500} size="sm">{prog.name || <Text component="span" c="dimmed" fs="italic" size="sm">Unnamed programme</Text>}</Text>
+          {prog.priority && (
+            <Badge size="xs" variant="light" color={priorityColor}>
+              {prog.priority.toUpperCase()}
+            </Badge>
+          )}
+        </Group>
       </Accordion.Control>
       <Accordion.Panel>
         <Stack gap="sm" pt="xs">
@@ -354,6 +380,19 @@ function ProgrammeItem({
             minRows={2}
             autosize
           />
+          <Group>
+            <Text size="sm" fw={500}>Priority</Text>
+            <SegmentedControl
+              size="xs"
+              value={prog.priority || 'medium'}
+              onChange={(val) => onUpdate(prog.id, { priority: val as 'high' | 'medium' | 'low' })}
+              data={[
+                { value: 'high', label: 'High' },
+                { value: 'medium', label: 'Medium' },
+                { value: 'low', label: 'Low' },
+              ]}
+            />
+          </Group>
           <TagsInput
             label="Keywords"
             description="Terms used for grant discovery matching. Press Enter or comma to add."
@@ -787,7 +826,7 @@ export default function OrganisationPage() {
     update({
       programmes: [
         ...effective.programmes,
-        { id: uid(), name: '', description: '', keywords: [], themes: [], methodologies: [], outputTypes: [] },
+        { id: uid(), name: '', description: '', keywords: [], themes: [], methodologies: [], outputTypes: [], priority: 'medium' },
       ],
     });
   };
@@ -942,18 +981,18 @@ export default function OrganisationPage() {
                   <Grid gutter="sm">
                     <Grid.Col span={{ base: 12, sm: 4 }}>
                       <TextInput
-                        label="Charity number"
-                        placeholder="e.g. 1234567"
-                        value={effective.charityNumber}
-                        onChange={(e) => update({ charityNumber: e.target.value })}
-                      />
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 12, sm: 4 }}>
-                      <TextInput
                         label="Company number"
                         placeholder="e.g. 12345678"
                         value={effective.companyNumber}
                         onChange={(e) => update({ companyNumber: e.target.value })}
+                      />
+                    </Grid.Col>
+                    <Grid.Col span={{ base: 12, sm: 4 }}>
+                      <TextInput
+                        label="Charity number"
+                        placeholder="e.g. 1234567"
+                        value={effective.charityNumber}
+                        onChange={(e) => update({ charityNumber: e.target.value })}
                       />
                     </Grid.Col>
                     <Grid.Col span={{ base: 12, sm: 4 }}>
