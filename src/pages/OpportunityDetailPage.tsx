@@ -26,7 +26,7 @@ import {
 } from '@mantine/core';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { notifications } from '@mantine/notifications';
 import {
   IconExternalLink,
@@ -283,9 +283,28 @@ export default function OpportunityDetailPage() {
     isEligible: boolean;
     reasons: string[];
     details: { geographyMatch: boolean; applicantTypeMatch: boolean; awardSizeMatch: boolean };
-  } | null>(null);
+    method?: 'rules' | 'llm';
+    confidence?: number;
+    llmDetails?: {
+      eligible: boolean;
+      confidence: number;
+      criteriaFound: string[];
+      blockers: string[];
+      warnings: string[];
+      uncertainAreas: string[];
+      reasoning: string;
+    };
+    sourcesChecked?: string[];
+  } | null>(() => {
+    try {
+      const stored = sessionStorage.getItem(`eligibility.${id}`);
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
 
-  // Extra links for eligibility context
+  // Extra links for eligibility context — persisted in opportunity tags with 'reflink:' prefix
   const [extraLinks, setExtraLinks] = useState<Array<{ url: string; label: string }>>([]);
   const [newLinkUrl, setNewLinkUrl] = useState('');
   const [newLinkLabel, setNewLinkLabel] = useState('');
@@ -310,11 +329,12 @@ export default function OpportunityDetailPage() {
 
   const checkEligibilityMutation = useMutation({
     mutationFn: async () => {
-      const res = await api.get(`/opportunities/${id}/eligibility`);
+      const res = await api.post(`/opportunities/${id}/eligibility`);
       return res.data;
     },
     onSuccess: (data) => {
       setEligibilityResult(data);
+      try { sessionStorage.setItem(`eligibility.${id}`, JSON.stringify(data)); } catch {}
     },
     onError: () => {
       notifications.show({ title: 'Error', message: 'Failed to check eligibility.', color: 'red' });
@@ -341,6 +361,31 @@ export default function OpportunityDetailPage() {
     queryFn: async () => {
       const response = await api.get(`/opportunities/${id}`);
       return response.data;
+    },
+  });
+
+  // Load persisted ref links from opportunity tags
+  useEffect(() => {
+    if (opportunity?.tags) {
+      const links = opportunity.tags
+        .filter(t => t.startsWith('reflink:'))
+        .map(t => {
+          const json = t.substring('reflink:'.length);
+          try { return JSON.parse(json); } catch { return null; }
+        })
+        .filter(Boolean) as Array<{ url: string; label: string }>;
+      setExtraLinks(links);
+    }
+  }, [opportunity?.tags]);
+
+  const saveRefLinksMutation = useMutation({
+    mutationFn: async (links: Array<{ url: string; label: string }>) => {
+      const existingTags = (opportunity?.tags || []).filter(t => !t.startsWith('reflink:'));
+      const reflinkTags = links.map(l => `reflink:${JSON.stringify(l)}`);
+      return api.patch(`/opportunities/${id}`, { tags: [...existingTags, ...reflinkTags] });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['opportunity', id] });
     },
   });
 
@@ -1043,14 +1088,116 @@ export default function OpportunityDetailPage() {
           <Tabs.Panel value="eligibility" pt="md">
             <Stack gap="md">
 
-              {/* Exeud Eligibility Check result */}
+              {/* Eligibility Check result */}
               {eligibilityResult && (
+                <>
+                {/* LLM-assisted result — detailed rendering */}
+                {eligibilityResult.method === 'llm' && eligibilityResult.llmDetails ? (
+                  <Paper p="md" withBorder>
+                    <Group justify="space-between" align="flex-start" mb="sm">
+                      <Stack gap={2}>
+                        <Group gap="xs">
+                          <ThemeIcon size={28} color={eligibilityResult.isEligible ? 'teal' : 'red'} variant="light">
+                            {eligibilityResult.isEligible ? <IconCheck size={18} /> : <IconAlertCircle size={18} />}
+                          </ThemeIcon>
+                          <Text size="sm" fw={600}>
+                            {eligibilityResult.isEligible ? 'Eligible — LLM assessment' : 'Not eligible — LLM assessment'}
+                          </Text>
+                        </Group>
+                        {eligibilityResult.confidence != null && (
+                          <Badge size="sm" variant="light" color={eligibilityResult.confidence >= 0.7 ? 'green' : eligibilityResult.confidence >= 0.4 ? 'yellow' : 'gray'}>
+                            {Math.round(eligibilityResult.confidence * 100)}% confidence
+                          </Badge>
+                        )}
+                      </Stack>
+                      <ActionIcon size="xs" variant="subtle" onClick={() => { setEligibilityResult(null); try { sessionStorage.removeItem(`eligibility.${id}`); } catch {} }}>
+                        <IconX size={14} />
+                      </ActionIcon>
+                    </Group>
+
+                    <Text size="xs" c="dimmed" mb="sm">{eligibilityResult.llmDetails.reasoning}</Text>
+
+                    {eligibilityResult.llmDetails.criteriaFound.length > 0 && (
+                      <Stack gap={4} mb="sm">
+                        <Text size="xs" fw={500} c="teal">Criteria met</Text>
+                        {eligibilityResult.llmDetails.criteriaFound.map((c, i) => (
+                          <Group key={i} gap={6}>
+                            <ThemeIcon size={14} color="teal" variant="light"><IconCheck size={8} /></ThemeIcon>
+                            <Text size="xs">{c}</Text>
+                          </Group>
+                        ))}
+                      </Stack>
+                    )}
+
+                    {eligibilityResult.llmDetails.blockers.length > 0 && (
+                      <Stack gap={4} mb="sm">
+                        <Text size="xs" fw={500} c="red">Blockers</Text>
+                        {eligibilityResult.llmDetails.blockers.map((b, i) => (
+                          <Group key={i} gap={6}>
+                            <ThemeIcon size={14} color="red" variant="light"><IconX size={8} /></ThemeIcon>
+                            <Text size="xs">{b}</Text>
+                          </Group>
+                        ))}
+                      </Stack>
+                    )}
+
+                    {eligibilityResult.llmDetails.warnings.length > 0 && (
+                      <Stack gap={4} mb="sm">
+                        <Text size="xs" fw={500} c="yellow">Warnings</Text>
+                        {eligibilityResult.llmDetails.warnings.map((w, i) => (
+                          <Group key={i} gap={6}>
+                            <ThemeIcon size={14} color="yellow" variant="light"><IconAlertCircle size={8} /></ThemeIcon>
+                            <Text size="xs">{w}</Text>
+                          </Group>
+                        ))}
+                      </Stack>
+                    )}
+
+                    {eligibilityResult.llmDetails.uncertainAreas.length > 0 && (
+                      <Stack gap={4} mb="sm">
+                        <Text size="xs" fw={500} c="gray">Uncertain areas</Text>
+                        {eligibilityResult.llmDetails.uncertainAreas.map((u, i) => (
+                          <Group key={i} gap={6}>
+                            <ThemeIcon size={14} color="gray" variant="light"><IconInfoCircle size={8} /></ThemeIcon>
+                            <Text size="xs">{u}</Text>
+                          </Group>
+                        ))}
+                      </Stack>
+                    )}
+
+                    {/* Quick rules check summary */}
+                    <Divider label="Quick rules check" labelPosition="left" my="sm" />
+                    <Group gap="xl">
+                      {[
+                        { label: 'Geography', ok: eligibilityResult.details.geographyMatch },
+                        { label: 'Applicant type', ok: eligibilityResult.details.applicantTypeMatch },
+                        { label: 'Award size', ok: eligibilityResult.details.awardSizeMatch },
+                      ].map(({ label, ok }) => (
+                        <Group key={label} gap={4}>
+                          <ThemeIcon size={16} color={ok ? 'teal' : 'red'} variant="light">
+                            {ok ? <IconCheck size={10} /> : <IconX size={10} />}
+                          </ThemeIcon>
+                          <Text size="xs" c={ok ? 'teal' : 'red'}>{label}</Text>
+                        </Group>
+                      ))}
+                    </Group>
+
+                    {eligibilityResult.sourcesChecked && eligibilityResult.sourcesChecked.length > 0 && (
+                      <Stack gap={2} mt="sm">
+                        <Text size="xs" c="dimmed">Sources checked:</Text>
+                        {eligibilityResult.sourcesChecked.map((url, i) => (
+                          <Anchor key={i} href={url} target="_blank" size="xs">{url}</Anchor>
+                        ))}
+                      </Stack>
+                    )}
+                  </Paper>
+                ) : (
                 <Alert
                   icon={eligibilityResult.isEligible ? <IconCheck size={16} /> : <IconAlertCircle size={16} />}
                   color={eligibilityResult.isEligible ? 'teal' : 'red'}
                   variant="light"
                   withCloseButton
-                  onClose={() => setEligibilityResult(null)}
+                  onClose={() => { setEligibilityResult(null); try { sessionStorage.removeItem(`eligibility.${id}`); } catch {} }}
                 >
                   <Text size="sm" fw={600} mb={4}>
                     {eligibilityResult.isEligible ? 'Exeud appears eligible for this opportunity' : 'Exeud may not be eligible'}
@@ -1074,7 +1221,14 @@ export default function OpportunityDetailPage() {
                       </Group>
                     ))}
                   </Group>
+                  {extraLinks.length === 0 && (
+                    <Text size="xs" c="dimmed" mt="sm">
+                      Add reference links above for a more detailed LLM-assisted assessment.
+                    </Text>
+                  )}
                 </Alert>
+                )}
+                </>
               )}
 
               {/* Exeud Alignment summary - quick glance without switching tab */}
@@ -1153,9 +1307,11 @@ export default function OpportunityDetailPage() {
                 <Stack gap="sm">
                   <Group justify="space-between" align="center">
                     <Stack gap={2}>
-                      <Text size="sm" fw={500}>Check Exeud Eligibility</Text>
+                      <Text size="sm" fw={500}>Check Eligibility</Text>
                       <Text size="xs" c="dimmed">
-                        Runs a rule-based check against Exeud's geography, applicant type, and award-size criteria.
+                        {extraLinks.length > 0
+                          ? 'Runs a rule-based check, then fetches reference links for an LLM-assisted assessment.'
+                          : 'Runs a rule-based check against geography, applicant type, and award-size criteria. Add reference links below for a detailed LLM assessment.'}
                       </Text>
                     </Stack>
                     <Button
@@ -1182,7 +1338,11 @@ export default function OpportunityDetailPage() {
                             size="xs"
                             variant="subtle"
                             color="red"
-                            onClick={() => setExtraLinks(extraLinks.filter((_, idx) => idx !== i))}
+                            onClick={() => {
+                              const updated = extraLinks.filter((_, idx) => idx !== i);
+                              setExtraLinks(updated);
+                              saveRefLinksMutation.mutate(updated);
+                            }}
                           >
                             <IconTrash size={10} />
                           </ActionIcon>
@@ -1217,9 +1377,11 @@ export default function OpportunityDetailPage() {
                       disabled={!newLinkUrl}
                       onClick={() => {
                         if (newLinkUrl) {
-                          setExtraLinks([...extraLinks, { url: newLinkUrl, label: newLinkLabel }]);
+                          const updated = [...extraLinks, { url: newLinkUrl, label: newLinkLabel }];
+                          setExtraLinks(updated);
                           setNewLinkUrl('');
                           setNewLinkLabel('');
+                          saveRefLinksMutation.mutate(updated);
                         }
                       }}
                     >
@@ -1290,7 +1452,7 @@ export default function OpportunityDetailPage() {
                     <Group gap="xs" wrap="wrap">
                       <Text size="xs" c="dimmed">Tags:</Text>
                       {opportunity.tags
-                        .filter(t => !t.startsWith('dim:'))
+                        .filter(t => !t.startsWith('dim:') && !t.startsWith('reflink:'))
                         .map((tag) => (
                           <Badge key={tag} size="xs" variant="light">{tag}</Badge>
                         ))}

@@ -51,6 +51,7 @@ interface OrgSettings {
   applicantTypeDescriptions: string[];
   discoveryContext: string;
   alignmentContext: string;
+  eligibilityContext: string;
   applicationContext: string;
   fundingMinAward: number;
   fundingIdealMin: number;
@@ -151,6 +152,17 @@ Applied research and commissioned builds demonstrating the toolkit in practice �
 - **Funding:** PLACEHOLDER — typical award size not yet confirmed
 - **Applicant:** Small technology company / studio, open-source maintainer, sole trader or micro-SME`;
 
+const ELIGIBILITY_CONTEXT_DEFAULT = `Exeuδ is a UK-registered limited company (Companies House #15228550), registered in England. It is NOT a sole trader, charity, or university.
+
+## Commercialisation Model
+Exeuδ operates a hybrid open-source / commercial model. The ExeuδVR toolkit is open-source (MPL 2.0). The automated deployment platform ("the Factory") will remain proprietary to protect artist-contributed content and preserve uniqueness. Several demos have commercial paths (Volarium: free-to-play with in-game purchases; Trypillia VR: ticketed events). This is NOT a maximalist commercial model — open-source does not mean anti-commercial.
+
+## Eligibility Notes
+- Can apply as: limited company, SME, technology company, startup, open-source maintainer, consortium partner
+- Cannot apply as: charity, non-profit, university, public sector body, sole trader
+- Geography: UK (England-registered), eligible for UK, EU (if UK eligible), international, and remote grants
+- Funding range: £5K–£1.5M (ideal £20K–£150K)`;
+
 const APPLICATION_CONTEXT_DEFAULT = `Exeuδ is an immersive technology company building open-source, self-hosted tools for the spatial web, deployed on the Internet Computer. Its flagship product, ExeuδVR, is a no-code/modular WebXR toolkit built on Unity.
 
 ## Our Work
@@ -216,9 +228,10 @@ const DEFAULT_SETTINGS: OrgSettings = {
   ],
   crossCuttingThemes: ['agency', 'frugality', 'plurality', 'eudaimonia', 'human flourishing', 'open source', 'self-hosting', 'data privacy', 'decentralisation', 'ethical technology', 'sustainability', 'modular design', 'community feedback'],
   geographicPriorities: ['UK', 'United Kingdom', 'international', 'global', 'remote'], // PLACEHOLDER
-  applicantTypeDescriptions: ['technology company', 'software studio', 'open-source maintainer', 'micro-SME', 'sole trader', 'startup'],
+  applicantTypeDescriptions: ['limited company', 'technology company', 'software studio', 'open-source maintainer', 'micro-SME', 'startup'],
   discoveryContext: DISCOVERY_CONTEXT_DEFAULT,
   alignmentContext: DISCOVERY_CONTEXT_DEFAULT,
+  eligibilityContext: ELIGIBILITY_CONTEXT_DEFAULT,
   applicationContext: APPLICATION_CONTEXT_DEFAULT,
   fundingMinAward: 5000,
   fundingIdealMin: 20000,
@@ -446,7 +459,7 @@ function ContextWorkspace({
 }: {
   label: string;
   description: string;
-  contextType: 'discovery' | 'alignment' | 'application';
+  contextType: 'discovery' | 'alignment' | 'eligibility' | 'application';
   value: string;
   onChange: (v: string) => void;
   open: boolean;
@@ -527,7 +540,7 @@ function ContextWorkspace({
     }
   };
 
-  const accentMap = { discovery: 'blue', alignment: 'violet', application: 'teal' } as const;
+  const accentMap = { discovery: 'blue', alignment: 'violet', eligibility: 'indigo', application: 'teal' } as const;
   const accent = accentMap[contextType];
 
   return (
@@ -765,12 +778,12 @@ export default function OrganisationPage() {
   const [activeTab, setActiveTab] = useState<string>(() => {
     return sessionStorage.getItem('orgPage.tab') ?? 'identity';
   });
-  const [ctxOpen, setCtxOpen] = useState<{ discovery: boolean; alignment: boolean; application: boolean }>(() => {
+  const [ctxOpen, setCtxOpen] = useState<{ discovery: boolean; alignment: boolean; eligibility: boolean; application: boolean }>(() => {
     try {
       const stored = sessionStorage.getItem('orgPage.ctxOpen');
-      return stored ? JSON.parse(stored) : { discovery: true, alignment: true, application: true };
+      return stored ? JSON.parse(stored) : { discovery: true, alignment: true, eligibility: true, application: true };
     } catch {
-      return { discovery: true, alignment: true, application: true };
+      return { discovery: true, alignment: true, eligibility: true, application: true };
     }
   });
 
@@ -1171,6 +1184,16 @@ export default function OrganisationPage() {
                 onChange={(v) => update({ alignmentContext: v })}
                 open={ctxOpen.alignment}
                 onToggle={() => setCtxOpenPersisted(s => ({ ...s, alignment: !s.alignment }))}
+              />
+
+              <ContextWorkspace
+                label="Eligibility assessment context"
+                description="Injected when the LLM evaluates whether the organisation is eligible for a specific grant. Include legal entity details, commercialisation model, applicant type constraints, and common eligibility misconceptions."
+                contextType="eligibility"
+                value={effective.eligibilityContext}
+                onChange={(v) => update({ eligibilityContext: v })}
+                open={ctxOpen.eligibility}
+                onToggle={() => setCtxOpenPersisted(s => ({ ...s, eligibility: !s.eligibility }))}
               />
 
               <ContextWorkspace
